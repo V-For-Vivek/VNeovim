@@ -1,0 +1,23 @@
+-- Enable the native Neovim bytecode cache loader for faster startup
+if vim.loader then vim.loader.enable() end
+
+require("user.plugins")
+require("user.options")
+require("user.keymaps")
+require("user.colorscheme")
+require("user.cmp")
+require("user.lsp")
+require("user.telescope")
+require("user.gitsigns")
+require("user.treesitter")
+require("user.autopairs")
+require("user.comment")
+require("user.nvim-tree")
+require("user.bufferline")
+require("user.lualine")
+require("user.indentline")
+require("user.whichkey")
+require("user.alpha")
+require("user.autocommands")
+require("user.toggleterm")
+require("user.fidget")

@@ -1,3 +1,4 @@
 # VNeovim
-It's my neovim cofiguration created with Lua and Lazy Package Manager
+It's my Neovim configuration, created with Lua and the Lazy Package Manager
+
 ![Welcome Image](Intro.png)

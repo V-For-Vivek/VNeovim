@@ -33,7 +33,7 @@ local options = {
     linebreak = true,
     scrolloff = 8,
     sidescrolloff = 8,
-    guifont = "FiraCode Nerd Font:h22",
+    guifont = "FiraCode Nerd Font:h14",
     backspace = {"indent", "eol", "start"}
 }
 

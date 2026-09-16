@@ -33,9 +33,11 @@ local options = {
     linebreak = true,
     scrolloff = 8,
     sidescrolloff = 8,
-    guifont = "FiraCode Nerd Font:h14",
+    guifont = "FiraCode Nerd Font:h13",
     backspace = {"indent", "eol", "start"}
 }
+
+vim.g.loaded_perl_provider = 0
 
 for k, v in pairs(options) do vim.opt[k] = v end
 
@@ -61,10 +63,8 @@ if vim.fn.has("win32") == 1 then
         shellredir = "-RedirectStandardOutput %s -NoNewWindow -Wait",
         shellpipe = "2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode",
         shellquote = "",
-        shellxquote = "",
+        shellxquote = ""
     }
 
-    for option, value in pairs(powershell_options) do
-        vim.opt[option] = value
-    end
+    for option, value in pairs(powershell_options) do vim.opt[option] = value end
 end

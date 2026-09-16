@@ -1,34 +1,24 @@
 local status_ok, gitsigns = pcall(require, "gitsigns")
-if not status_ok then
-    return
-end
+if not status_ok then return end
 
 gitsigns.setup {
+    -- FIXED FOR NVIM 0.12+: Stop gitsigns from auto-generating raw <leader>g root mappings
+    on_attach = function(bufnr)
+        -- Leaving this empty blocks the plugin's default fallback mappings,
+        -- allowing Which-Key to manage all your git shortcuts cleanly!
+    end,
     signs = {
-        add = {
-            text = "▎"
-        },
-        change = {
-            text = "▎"
-        },
-        delete = {
-            text = "契"
-        },
-        topdelete = {
-            text = "契"
-        },
-        changedelete = {
-            text = "▎"
-        }
+        add = {text = "▎"},
+        change = {text = "▎"},
+        delete = {text = "契"},
+        topdelete = {text = "契"},
+        changedelete = {text = "▎"}
     },
     signcolumn = true, -- Toggle with `:Gitsigns toggle_signs`
     numhl = false, -- Toggle with `:Gitsigns toggle_numhl`
     linehl = false, -- Toggle with `:Gitsigns toggle_linehl`
     word_diff = false, -- Toggle with `:Gitsigns toggle_word_diff`
-    watch_gitdir = {
-        interval = 1000,
-        follow_files = true
-    },
+    watch_gitdir = {interval = 1000, follow_files = true},
     attach_to_untracked = true,
     current_line_blame = false, -- Toggle with `:Gitsigns toggle_current_line_blame`
     current_line_blame_opts = {
@@ -50,4 +40,3 @@ gitsigns.setup {
         col = 1
     }
 }
-

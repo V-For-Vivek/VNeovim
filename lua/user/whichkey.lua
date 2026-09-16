@@ -24,8 +24,16 @@ which_key.setup({
     }
 })
 
+-- FIXED FOR NVIM 0.12+: Pre-register parent folders strictly as structural groups.
+which_key.add({
+    {"<leader>f", group = "Find/Files"}, {"<leader>p", group = "Lazy"},
+    {"<leader>g", group = "Git"}, {"<leader>l", group = "LSP"},
+    {"<leader>s", group = "Search"}, {"<leader>t", group = "Terminal"}
+})
+
 -- 2. Modernized Mappings Grid using the new .add() API layout
-which_key.add({ -- Top Level Controls
+which_key.add({
+    -- Top Level Controls
     {"<leader>a", "<cmd>Alpha<cr>", desc = "Alpha"}, {
         "<leader>b",
         function()
@@ -38,28 +46,39 @@ which_key.add({ -- Top Level Controls
     {"<leader>w", "<cmd>w!<CR>", desc = "Save"},
     {"<leader>q", "<cmd>q!<CR>", desc = "Quit"},
     {"<leader>c", "<cmd>Bdelete!<CR>", desc = "Close Buffer"},
-    {"<leader>h", "<cmd>nohlsearch<CR>", desc = "No Highlight"}, {
-        "<leader>f",
+    {"<leader>h", "<cmd>nohlsearch<CR>", desc = "No Highlight"},
+
+    -- Find / Files Lookups
+    {
+        "<leader>fd",
         function()
             require('telescope.builtin').find_files(
                 require('telescope.themes').get_dropdown {previewer = false})
         end,
-        desc = "Find files"
+        desc = "Find files (Dropdown)"
     },
     {"<leader>F", "<cmd>Telescope live_grep theme=ivy<cr>", desc = "Find Text"},
     {
         "<leader>P",
         function() require('telescope').extensions.projects.projects() end,
         desc = "Projects"
-    }, -- Lazy.nvim Plugin Manager Group (Replaces old Packer mapping block)
-    {"<leader>p", group = "Lazy"},
+    }, -- Lazy.nvim Plugin Manager Group
     {"<leader>ps", "<cmd>Lazy sync<cr>", desc = "Sync Plugins"},
     {"<leader>ph", "<cmd>Lazy home<cr>", desc = "Lazy Home"},
     {"<leader>pl", "<cmd>Lazy log<cr>", desc = "Lazy Log"},
-    {"<leader>pu", "<cmd>Lazy update<cr>", desc = "Update Plugins"}, -- Git Operations Group
-    {"<leader>g", group = "Git"}, {
+    {"<leader>pu", "<cmd>Lazy update<cr>", desc = "Update Plugins"},
+
+    -- Git Operations Group
+    {
         "<leader>gg",
-        "<cmd>ToggleTerm direction=float<cr>lazygit<CR>",
+        function()
+            if _LAZYGIT_TOGGLE then
+                _LAZYGIT_TOGGLE()
+            else
+                vim.cmd("ToggleTerm direction=float")
+                vim.cmd("lazygit")
+            end
+        end,
         desc = "Lazygit"
     }, {
         "<leader>gj",
@@ -98,8 +117,9 @@ which_key.add({ -- Top Level Controls
     {"<leader>go", "<cmd>Telescope git_status<cr>", desc = "Open changed file"},
     {"<leader>gb", "<cmd>Telescope git_branches<cr>", desc = "Checkout branch"},
     {"<leader>gc", "<cmd>Telescope git_commits<cr>", desc = "Checkout commit"},
-    {"<leader>gd", "<cmd>Gitsigns diffthis HEAD<cr>", desc = "Diff"}, -- LSP Operations Group (Updated deprecated functions)
-    {"<leader>l", group = "LSP"},
+    {"<leader>gd", "<cmd>Gitsigns diffthis HEAD<cr>", desc = "Diff"},
+
+    -- LSP Operations Group
     {
         "<leader>la",
         function() vim.lsp.buf.code_action() end,
@@ -143,7 +163,6 @@ which_key.add({ -- Top Level Controls
         "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
         desc = "Workspace Symbols"
     }, -- Search Operations Group
-    {"<leader>s", group = "Search"},
     {"<leader>sb", "<cmd>Telescope git_branches<cr>", desc = "Checkout branch"},
     {"<leader>sc", "<cmd>Telescope colorscheme<cr>", desc = "Colorscheme"},
     {"<leader>sh", "<cmd>Telescope help_tags<cr>", desc = "Find Help"},
@@ -151,8 +170,9 @@ which_key.add({ -- Top Level Controls
     {"<leader>sr", "<cmd>Telescope oldfiles<cr>", desc = "Open Recent File"},
     {"<leader>sR", "<cmd>Telescope registers<cr>", desc = "Registers"},
     {"<leader>sk", "<cmd>Telescope keymaps<cr>", desc = "Keymaps"},
-    {"<leader>sC", "<cmd>Telescope commands<cr>", desc = "Commands"}, -- Terminal Quick-Launch Group
-    {"<leader>t", group = "Terminal"},
+    {"<leader>sC", "<cmd>Telescope commands<cr>", desc = "Commands"},
+
+    -- Terminal Quick-Launch Group
     {"<leader>tn", "<cmd>ToggleTerm direction=float<cr>node<CR>", desc = "Node"},
     {"<leader>tu", "<cmd>ToggleTerm direction=float<cr>ncdu<CR>", desc = "NCDU"},
     {

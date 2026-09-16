@@ -21,7 +21,10 @@ local plugins = { -- Useful lua functions used by lots of plugins
     {"nvim-lua/plenary.nvim"}, -- Autopairs, integrates with both cmp and treesitter
     {"windwp/nvim-autopairs"}, -- Code commenting
     {"numToStr/Comment.nvim"}, {"JoosepAlviste/nvim-ts-context-commentstring"}, -- Icons and File Tree
-    {"kyazdani42/nvim-web-devicons"}, {"kyazdani42/nvim-tree.lua"}, -- Tabs and Buffers
+    {"kyazdani42/nvim-web-devicons"}, {
+        "echasnovski/mini.nvim",
+        config = function() require("mini.icons").setup() end
+    }, {"kyazdani42/nvim-tree.lua"}, -- Tabs and Buffers
     {"akinsho/bufferline.nvim"}, {"moll/vim-bbye"},
 
     -- Status line (Dependencies are defined via 'dependencies' array in lazy)
@@ -73,7 +76,17 @@ local plugins = { -- Useful lua functions used by lots of plugins
     {"mfussenegger/nvim-jdtls"}, -- DAP Debugger Ecosystem
     {"mfussenegger/nvim-dap"}, {"rcarriga/nvim-dap-ui"},
     {"jay-babu/mason-nvim-dap.nvim"}, -- Snippets Engine
-    {"L3MON4D3/LuaSnip"}, {"rafamadriz/friendly-snippets"}, -- LSP Core Configuration
+    {
+        "L3MON4D3/LuaSnip",
+        -- Follow latest release.
+        version = "v2.*",
+        -- Install jsregexp (optional!).
+        build = "make install_jsregexp",
+        dependencies = {"rafamadriz/friendly-snippets"},
+        config = function()
+            -- Your LuaSnip config here
+        end
+    }, {"rafamadriz/friendly-snippets"}, -- LSP Core Configuration
     {"neovim/nvim-lspconfig"}, {"williamboman/mason.nvim"}, -- simple to use language server installer
     {"williamboman/mason-lspconfig.nvim"}, {"nvimtools/none-ls.nvim"}, -- for formatters and linters
     {"RRethy/vim-illuminate"}, -- Fuzzy Finder

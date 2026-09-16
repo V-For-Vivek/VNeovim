@@ -1,14 +1,12 @@
 local status_ok, fidget = pcall(require, "fidget")
-if not status_ok then
-    return
-end
+if not status_ok then return end
 
 fidget.setup {
     -- Options related to the LSP progress notification subsystem
     progress = {
         display = {
             -- UPDATED: Modern way to define the spinner style animation
-            spinner = "moon",
+            progress_icon = "moon",
 
             -- UPDATED: Modern functional overrides for text lifecycle markers
             done_style = "Constant", -- Highlight group for finished tasks
@@ -16,9 +14,7 @@ fidget.setup {
 
             -- Customize the final completion message formatting text
             format_message = function(msg)
-                if msg.done then
-                    return "👌 Completed"
-                end
+                if msg.done then return "👌 Completed" end
                 return msg.message or "Running..."
             end
         }

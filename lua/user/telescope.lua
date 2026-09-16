@@ -4,12 +4,9 @@ if not status_ok then
     return
 end
 
--- UPDATED: Replaced legacy string-based vim.cmd with modern native Lua autocommand
 vim.api.nvim_create_autocmd("User", {
     pattern = "TelescopePreviewerLoaded",
-    callback = function()
-        vim.opt_local.wrap = true
-    end
+    callback = function() vim.opt_local.wrap = true end
 })
 
 local actions = require("telescope.actions")
@@ -18,9 +15,9 @@ telescope.setup {
     defaults = {
         previewer = true,
         color_devicons = true,
-        -- UPDATED: Modernized prompts to use v3.0+ Nerd Font compliant icons (   and   )
-        prompt_prefix = "   ",
-        selection_caret = "   ",
+        -- FIXED: Populated empty fields with standard modern v3.0 Nerd Font icons
+        prompt_prefix = " 🔍 ",
+        selection_caret = " ❯ ",
         path_display = {"smart"},
         mappings = {
             i = {
@@ -39,10 +36,13 @@ telescope.setup {
                 ["<C-d>"] = actions.preview_scrolling_down,
                 ["<PageUp>"] = actions.results_scrolling_up,
                 ["<PageDown>"] = actions.results_scrolling_down,
-                ["<Tab>"] = actions.toggle_selection + actions.move_selection_worse,
-                ["<S-Tab>"] = actions.toggle_selection + actions.move_selection_better,
+                ["<Tab>"] = actions.toggle_selection +
+                    actions.move_selection_worse,
+                ["<S-Tab>"] = actions.toggle_selection +
+                    actions.move_selection_better,
                 ["<C-q>"] = actions.send_to_qflist + actions.open_qflist,
-                ["<M-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
+                ["<M-q>"] = actions.send_selected_to_qflist +
+                    actions.open_qflist,
                 ["<C-l>"] = actions.complete_tag,
                 ["<C-_>"] = actions.which_key
             },
@@ -52,10 +52,13 @@ telescope.setup {
                 ["<C-x>"] = actions.select_horizontal,
                 ["<C-v>"] = actions.select_vertical,
                 ["<C-t>"] = actions.select_tab,
-                ["<Tab>"] = actions.toggle_selection + actions.move_selection_worse,
-                ["<S-Tab>"] = actions.toggle_selection + actions.move_selection_better,
+                ["<Tab>"] = actions.toggle_selection +
+                    actions.move_selection_worse,
+                ["<S-Tab>"] = actions.toggle_selection +
+                    actions.move_selection_better,
                 ["<C-q>"] = actions.send_to_qflist + actions.open_qflist,
-                ["<M-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
+                ["<M-q>"] = actions.send_selected_to_qflist +
+                    actions.open_qflist,
                 ["j"] = actions.move_selection_next,
                 ["k"] = actions.move_selection_previous,
                 ["H"] = actions.move_to_top,
@@ -81,13 +84,8 @@ telescope.setup {
                 prompt_position = 'bottom',
                 preview_width = 0.5
             },
-            vertical = {
-                prompt_position = 'bottom',
-                preview_cutoff = 0.4
-            },
-            flex = {
-                flip_columns = 110
-            },
+            vertical = {prompt_position = 'bottom', preview_cutoff = 0.4},
+            flex = {flip_columns = 110},
             height = 0.94,
             width = 0.86
         }

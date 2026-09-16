@@ -8,5 +8,9 @@ local ts_context_ok, ts_context = pcall(require, "ts_context_commentstring.integ
 
 comment.setup {
     -- UPDATED: Replaced manual logic blocks with the official native integration helper
-    pre_hook = ts_context_ok and ts_context.create_pre_hook() or nil
+    pre_hook = ts_context_ok and ts_context.create_pre_hook() or nil,
+    mappings = {
+        basic = true,
+        extra = false, -- Disables gco, gcO, gcA to eliminate keymap overlaps
+    },
 }

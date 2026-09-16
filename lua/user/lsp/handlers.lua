@@ -55,9 +55,9 @@ M.on_attach = function(client, bufnr)
     end
 
     lsp_keymaps(bufnr)
-
-    local status_ok, illuminate = pcall(require, "illuminate")
-    if status_ok then illuminate.on_attach(client) end
+    
+    -- FIXED: Removed manual illuminate.on_attach(client) invocation 
+    -- Modern vim-illuminate versions automatically hook into the LSP system.
 end
 
 -- 4. Diagnostic Indicators Setup Block
@@ -108,4 +108,3 @@ M.setup = function()
 end
 
 return M
-
